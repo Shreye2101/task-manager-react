@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Container, Typography, TextField, Button } from "@mui/material";
+import { useTask } from "../context/TaskContext";
+
 
 function TimeTrackingPage() {
   const [taskName, setTaskName] = useState("");
   const [timeSpent, setTimeSpent] = useState("");
+  const { logTime } = useTask()
 
   const handleTrack = () => {
-    if (taskName.trim() && timeSpent.trim()) {
-      alert(`Time Logged: ${timeSpent} for "${taskName}"`);
+    if (taskName.trim() && timeSpent.trim() && !isNaN(timeSpent)) {
+      logTime(taskName, timeSpent);
       setTaskName("");
       setTimeSpent("");
     }
@@ -33,6 +36,7 @@ function TimeTrackingPage() {
         onChange={(e) => setTimeSpent(e.target.value)}
         variant="outlined"
         margin="normal"
+        type="number"
       />
       <Button variant="contained" onClick={handleTrack} sx={{ mt: 2 }}>
         Log Time

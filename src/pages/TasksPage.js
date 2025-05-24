@@ -1,10 +1,10 @@
-import React, { useContext, useState } from "react";
-import { TaskContext } from "../context/TaskContext";
+import React, { useState } from "react";
+import { useTask } from "../context/TaskContext";
 import TaskList from "../components/TaskList";
 import { TextField, Button, Container, Typography } from "@mui/material";
 
 function TasksPage() {
-  const { addTask } = useContext(TaskContext);
+  const { addTask } = useTask();
   const [input, setInput] = useState("");
 
   const handleAdd = () => {

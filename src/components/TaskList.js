@@ -1,18 +1,38 @@
-import React, { useContext } from "react";
-import { TaskContext } from "../context/TaskContext";
-import { List, ListItem, ListItemText, Paper } from "@mui/material";
+import React from "react";
+import { useTask } from "../context/TaskContext";
+import {
+  List,
+  ListItem,
+  ListItemText,
+  Paper,
+  IconButton,
+} from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 function TaskList() {
-  const { tasks } = useContext(TaskContext);
+  const { tasks, deleteTask } = useTask();
 
   return (
-    <Paper elevation={3}>
+    <Paper elevation={3} style={{ padding: "1rem", marginTop: "1rem" }}>
       <List>
-        {tasks.map((task) => (
-          <ListItem key={task.id}>
-            <ListItemText primary={task.text} />
+        {tasks.length === 0 ? (
+          <ListItem>
+            <ListItemText primary="No tasks yet." />
           </ListItem>
-        ))}
+        ) : (
+          tasks.map((task) => (
+            <ListItem
+              key={task._id}
+              secondaryAction={
+                <IconButton edge="end" aria-label="delete" onClick={() => deleteTask(task._id)}>
+                  <DeleteIcon />
+                </IconButton>
+              }
+            >
+              <ListItemText primary={task.text} />
+            </ListItem>
+          ))
+        )}
       </List>
     </Paper>
   );
